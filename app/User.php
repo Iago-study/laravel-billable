@@ -28,4 +28,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * A user has only one token.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function token()
+    {
+        return $this->hasOne(UserToken::class);
+    }
+
+    protected static function getUserByEmail($value)
+    {
+        $user = self::where('email', $value)->first();
+        return $user;
+    }
 }

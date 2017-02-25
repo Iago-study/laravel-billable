@@ -15,12 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
+// Common
 Route::get('/home', 'HomeController@index');
-
 Route::get('/plans', 'PlansController@index');
 
+// Authenticate
+Auth::routes();
+
+// Magic Link
+Route::get('/login/magiclink', 'Auth\MagicLoginController@show');
+Route::post('/login/magiclink', 'Auth\MagicLoginController@sendToken');
+Route::get('/login/magiclink/{token}', 'Auth\MagicLoginController@authenticate');
+
+// Subscribe
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/plan/{plan}', 'PlansController@show');
     Route::get('/braintree/token', 'BraintreeTokenController@token');
@@ -39,7 +46,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
+// Webhooks
 Route::post(
     'braintree/webhooks',
     '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
 );
+
