@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SubscribedEvent;
 use Illuminate\Http\Request;
 use App\Plan;
 
@@ -27,7 +28,9 @@ class SubscriptionsController extends Controller
             $request->user()->subscription('main')->swap($plan->braintree_plan);
         }
 
-        return redirect('home')->with('success', 'Subscribed to '.$plan->braintree_plan.' successfully');
+        event(new SubscribedEvent('Subscribed to '.$plan->braintree_plan.' successfully'));
+
+        return redirect('home')->with('success', 'Subscribed to '.$plan->braintree_plan.' plan successfully');
     }
 
     public function cancel(Request $request)

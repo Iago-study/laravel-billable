@@ -3,8 +3,15 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Log;
 use Braintree;
 use Laravel\Cashier\Cashier;
+
+class LaravelLoggerProxy {
+    public function log( $msg ) {
+        Log::info($msg);
+    }
+}
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
         Braintree\Configuration::privateKey(env('BRAINTREE_PRIVATE_KEY'));
 
         //Cashier::useCurrency('eur', '€');
+
+        $pusher = $this->app->make('pusher');
+        $pusher->set_logger( new LaravelLoggerProxy() );
     }
 
     /**

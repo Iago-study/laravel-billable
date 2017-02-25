@@ -101,5 +101,14 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('braintree')
+    <script src="//js.pusher.com/3.0/pusher.min.js"></script>
+    <script>
+        var pusher = new Pusher("{{env("PUSHER_APP_KEY")}}")
+        var channel = pusher.subscribe('test-channel');
+        channel.bind('test-event', function(data) {
+          alert(data.text);
+        });
+    </script>
+
 </body>
 </html>
