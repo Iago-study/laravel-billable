@@ -43,9 +43,9 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-left">
-                        <li><a href="{{ url('/plans') }}">Plans</a></li>
-                        <li><a href="{{ url('/lessons') }}">Lessons</a></li>
-                        <li><a href="{{ url('/prolessons') }}">Premium Lessons</a></li>
+                        <li><a href="{{ url('/plans') }}">{{__('menu.plans')}}</a></li>
+                        <li><a href="{{ url('/lessons') }}">{{__('menu.lessons')}}</a></li>
+                        <li><a href="{{ url('/prolessons') }}">{{__('menu.lessons_premium')}}</a></li>
                     </ul>
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
 
@@ -65,7 +65,7 @@
                                     <li>
                                         @if (Auth::user()->subscribed('main'))
                                                 <a href="{{ url('/subscriptions') }}">
-                                                    Manage subscriptions
+                                                    {{__('menu.manage_subscriptions')}}
                                                 </a>
                                         @endif
                                     </li>
@@ -83,10 +83,22 @@
                                 </ul>
                             </li>
                         @endif
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <span class="caret"></span> {{ strtoupper(config('app.locale'))}}
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{action('LocalesController@change', ['language' => 'pt'])}}">PT</a></li>
+                                <li><a href="{{action('LocalesController@change', ['language' => 'en'])}}">EN</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
+
+
 
         <div class="container">
             <div class="row">

@@ -18,6 +18,7 @@ Route::get('/', function () {
 // Common
 Route::get('/home', 'HomeController@index');
 Route::get('/plans', 'PlansController@index');
+Route::get('/locale/{language}', 'LocalesController@change')->name('locale');
 
 // Authenticate
 Auth::routes();
@@ -52,17 +53,3 @@ Route::post(
     '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
 );
 
-
-// Pusher
-Route::get('/bridge', function() {
-    $pusher = App::make('pusher');
-    $pusher->trigger('test-channel', 'test-event', array('text' => 'Preparing the Pusher Laracon.eu workshop!'));
-
-    return view('welcome');
-});
-
-Route::get('/broadcast', function() {
-    event(new \App\Events\SubscribedEvent('Broadcasting in Laravel using Pusher!'));
-
-    return view('welcome');
-});
