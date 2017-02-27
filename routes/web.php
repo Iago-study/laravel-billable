@@ -20,6 +20,9 @@ Route::get('/home', 'HomeController@index');
 Route::get('/plans', 'PlansController@index');
 Route::get('/locale/{language}', 'LocalesController@change')->name('locale');
 
+// Configuration
+Route::get('user/profile', 'ProfileController@index')->name('user.profile');
+
 // Authenticate
 Auth::routes();
 
