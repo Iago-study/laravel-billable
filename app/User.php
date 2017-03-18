@@ -39,9 +39,20 @@ class User extends Authenticatable
         return $this->hasOne(UserToken::class);
     }
 
+    /**
+     * A user has only one role
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     protected static function getUserByEmail($value)
     {
         $user = self::where('email', $value)->first();
         return $user;
     }
+
 }
